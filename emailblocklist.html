@@ -1,0 +1,283 @@
+<div class="page-container"><!--
+    {{> header}}-->
+      <app-header></app-header>
+          <!-- START PAGE CONTENT WRAPPER -->
+          <div class="page-content-wrapper">
+            <!-- START PAGE CONTENT -->
+            <div class="content no-padding">
+              <div class="container container_dash">
+             <!--   {{> flash}}-->
+                <div class="page_head fs-12 text-uppercase m-t-30 m-b-20">
+                  <!-- <a ui-sref="app.dashboard">DASHBOARD</a> -->
+                </div>
+    
+                <div class="panel panel_shadow padding-10 full-width pull-left"  ng-cloak>
+                   <h5 class="border_head user_panel_head no-margin">
+                    <span class=""><i class="fa fa-exchange"></i>Email Blocklist</span>
+                   </h5>
+                   <div class="container">  
+                    <div class="form-group">  
+                      <label>  
+                        Email:  
+                      </label>  
+                      <input type="text" [formControl]="email" />  
+                    </div>  
+                    <div class="form-group">  
+                      <button (click)="updateEmail()" class="btn btn-dark">Save Email</button>  
+                    </div>  
+                    <p>  
+                  Successfully the email added to blocklist  
+                    </p>  
+                  </div>  
+                   <div class="pull-right">
+                    <div class="admin_tabs m-t-10 inline v-align-top">
+                        <ul class="nav nav-tabs text-center no-border" role="tablist">
+                            <li role="presentation" ng-class="{active:today}"><a href=""
+                                                                                 aria-controls="regToday"
+                                                                                 role="tab" data-toggle="tab"
+                                                                                 ng-click="selectRange('getTotalTodaysCount')">Today</a>
+                            </li>
+                            <li role="presentation" ng-class="{active:weekly}"><a href=""
+                                                                                  aria-controls="regWeek"
+                                                                                  role="tab" data-toggle="tab"
+                                                                                  ng-click="selectRange('getTotalLastWeekCount')">Weekly</a>
+                            </li>
+                            <li role="presentation" ng-class="{active:monthly}"><a href=""
+                                                                                   aria-controls="regMonth"
+                                                                                   role="tab" data-toggle="tab"
+                                                                                   ng-click="selectRange('getTotalLastMonthCount')">Monthly</a>
+                            </li>
+                            <li role="presentation" ng-class="{active:ranger}">
+                                <a href="" aria-controls="regRange" role="tab" data-toggle="tab"
+                                   ng-click="selectRange('getTotalClientsCount')">All</a>
+                            </li>
+                        </ul>
+                        <br/>
+                    </div>
+                </div>
+    
+    
+                   <div class="admin_reg_tabs m-t-20 pull-left full-width">
+    
+                      <div class="clearfix"></div>
+    
+                      <!-- Tab panes -->
+                      <div ng-show="tc.preload" class="preloader"></div>
+                      <div ng-hide="tc.preload" class="tab-content">
+                        <div role="tabpanel" class="tab-pane active">
+                          <div class="admin_reg_table dash_table">
+                            <form>
+                              <div class="row">
+                                <div class="col-sm-3">
+                                  <div class="form-group">
+                                    <div class="input-group">
+                                      <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                                      <input type="text" class="form-control" placeholder="Search by Client Id" ng-model="searchList.clientId">   
+                                    </div>
+                                  </div>
+                                </div>
+    
+                                  <div class="col-sm-3">
+                                      <div class="form-group">
+                                          <div class="input-group">
+                                              <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                                              <input type="text" class="form-control" placeholder="Search by Subdomain" ng-model="searchList.subdomain">
+                                          </div>
+                                      </div>
+                                  </div>
+    
+                                  <div class="col-sm-3">
+                                      <div class="form-group">
+                                          <div class="input-group">
+                                              <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                                              <input type="text" class="form-control" placeholder="Search by Email Id" ng-model="searchList.email">
+                                          </div>
+                                      </div>
+                                  </div>
+    
+    
+                                <div class="col-sm-3">
+                                  <div class="form-group">
+                                    <div class="input-group mobFullWidth">
+                                      <button class="btn btn-green m-t-5 pull-left inline text-white transactionSearch" data-ng-click="callSearchDB()">Search</button>   
+                                    </div>
+                                  </div>
+                                </div>
+    
+                                <div class="col-sm-12 no-padding">
+                                  <div id="demo" class="collapse">
+                                    <div class="row m-t-10">
+                                      <div class="col-sm-4">
+                                        <div class="form-group">
+                                          <div class="input-group">
+                                            <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                                            <input type="text" class="form-control" placeholder="Search by Stripe Customer Id" ng-model="searchList.customerId">   
+                                          </div>
+                                        </div>
+                                      </div>
+    
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                                                    <input type="text" class="form-control" placeholder="Search by Subscription Id" ng-model="searchList.subscriptionId">
+                                                </div>
+                                            </div>
+                                        </div>
+    
+                                        <!-- <div class="col-sm-2">
+                                          <div class="form-group">
+                                            <div class="input-group mobFullWidth">
+                                              <button class="btn btn-green m-t-5 pull-left inline text-white transactionSearch" data-ng-click="callSearchDB()">Search</button>   
+                                            </div>
+                                          </div>
+                                        </div> -->
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="col-sm-6">
+                                  <button type="button" class="btn btn-primary m-t-5 pull-left inline text-white transactionSearch" data-toggle="collapse" data-target="#demo" id="advncSearchBtn">Advance search option</button>
+                                </div>
+    
+                                <div class="col-sm-12 alert alert-danger" ng-if="errMsg">
+                                  {{ errMsg }}
+                                </div>
+    
+                              </div>
+                            </form>
+                            <div class="pull-right">
+                              <form name="itemForm">
+                                Email Blocklist per page:
+                                <input type="number" ng-model="perPage" min="1" max="100" class="inputField" />
+                                <input type="submit" value="OK" data-ng-click="updateItemsPP(perPage)" class="inputField">
+                              </form>
+                            </div>
+                            <div id="exportable">
+                            <table class="table table-hover " cellspacing="0" width="100%" ng-cloak>
+                              <thead>
+                                <tr>
+                                  <th class="width12percent">
+                                    <a ng-click="sortAuthDate();">
+                                      Date
+                                      <span ng-show="orderByField == 'createdAt'">
+                                        <span ng-show="!reverseSort"><i class="fa fa-arrow-up"></i></span>
+                                        <span ng-show="reverseSort"><i class="fa fa-arrow-down"></i></span>
+                                      </span>
+                                    </a>
+                                  </th>
+                                  <th class="width12percent">Email Id</th>
+                                  <th class="width12percent">Name</th>
+                                  <th class="width12percent">Country Name</th>
+                                  <th class="width12percent">Mobile No.</th>
+                                  <th class="width12percent">Subdomain</th>
+                                  <th class="width12percent">Nature of Business</th>
+                            
+                
+                                  <!-- <th>gateway_cust_id</th>
+                                  <th>stripe_subscription_id</th>
+                                  <th >reason_of_cancel</th> -->
+    
+                                  <th class="width12percent">Is Active</th>
+                                  <th class="width12percent">Promotional Email</th>
+                                  <th class="width12percent">Is Contacted </th>
+                                  <th class="width12percent">Steps done</th>
+    
+                                </tr>
+                              </thead>
+                              <!-- <li data-ng-repeat="pr in ul.details"> -->
+                                <tbody>
+                                  <tr class="p-t-10 p-b-10" dir-paginate="client in tc.clients | orderBy:orderByField:false | itemsPerPage:10"
+                                  pagination-id="tutor" total-items="totalEntry" current-page="pageNumber">
+    
+                                    <td data-ng-bind="client.createdAt | date:'dd MMM yy h:mm a' : timezone ">
+                                    </td>
+                                    <td><a target="_self" ui-sref="app.client({clientId:client.id})">{{client.email_id}}</a></td>
+                                    <td><a  target="_self" ui-sref="app.client({clientId:client.id})">{{client.name}}</a></td>
+                                    <td>{{client.country_name}}</a></td>
+                                    <td>{{client.mobile_no}}</td>
+                                    <td>{{client.subdomain}}</td>
+                                    <td>{{client.nature_of_business}}</td>
+     
+                                  
+                                    <!-- <td> <a target="_blank" href="{{stripeDashboardLink}}customers/{{client.gateway_cust_id}}"> {{client.gateway_cust_id}}</a></td>
+                                    <td><a target="_blank" href="{{stripeDashboardLink}}subscriptions/{{client.stripe_subscription_id}}"> {{client.stripe_subscription_id}}</a></td>
+                                    <td>{{client.reason_of_cancel}}</td> -->
+    
+                                    <td>{{client.is_active}}</td>
+                                    <td><input type="checkbox"  checked="{{client.is_promotional_email_sending_allowed}}"> </td>
+                                      <td> {{client.is_contacted}} </td>
+                                      <td><a ng-click="tc.stepDone = client.steps_done" href="#" data-toggle="modal" data-target="#thingsToDo" title="To-do list" class="stepsDone clearfix" >{{client.steps_done.count}}</a></td>
+                                  </tr>
+                                </tbody>
+                            </table>
+                            </div>
+                            <dir-pagination-controls
+                             max-size="3"
+                             direction-links="true"
+                             boundary-links="true" 
+                             pagination-id="tutor" 
+                             class="pull-right"
+                             on-page-change="pageChanged(newPageNumber)">
+                            </dir-pagination-controls>
+    
+                           </div>
+                            <div class="clearfix contact-form-end"></div>
+                        </div>
+                      </div>
+                   </div>
+    
+                </div>
+              </div> 
+            </div>
+          </div>
+            <!-- END PAGE CONTENT -->
+           <!-- {{> footer}}-->
+      </div>
+    
+    
+    <!-- USER SETTINGS MODAL STICK UP  -->
+    <div class="modal fade stick-up" id="thingsToDo" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header clearfix text-left">
+            <button type="button" class="close fs-14" ng-click="dismissModal()" aria-hidden="true">x<!-- <i class="pg-close fs-14"></i> -->
+            </button>
+            <h5 class="changePassHeading"><i class="fa fa-check-circle"></i> Steps Completed by Client</h5>   
+          </div>
+          <form role="form" name="stepsDone">
+            <div class="modal-body">            
+                <div class="form-group-attached">
+                  <div class="row">
+                    <table class="table-bordered thingsTable">
+                      <tr>
+                        <td><input type="checkbox" name="website_settings"  ng-checked="tc.stepDone.website_settings" onclick="return false;"></td>
+                        <td><span class="thingsListText"> Customize website settings</span></td>
+                      </tr>
+                      <tr>
+                        <td><input type="checkbox" name="subjects" ng-checked="tc.stepDone.subjects" onclick="return false;" /></td>
+                        <td><span class="thingsListText"> Add subjects</span></td>
+                      </tr>
+                      <tr>
+                        <td><input type="checkbox" name="tutors" ng-checked="tc.stepDone.tutors" onclick="return false;"></td>
+                        <td><span class="thingsListText"> Add tutor</span></td>
+                      </tr>
+                      <tr>
+                        <td><input type="checkbox" name="students" ng-checked="tc.stepDone.students" onclick="return false;"></td>
+                        <td><span class="thingsListText"> Create first student account</span></td>
+                      </tr>
+                      <tr>
+                        <td><input type="checkbox" name="courses" ng-checked="tc.stepDone.courses" onclick="return false;"></td>
+                        <td><span class="thingsListText"> Create first online course</span></td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>                    
+            </div>
+          </form>
+        </div>
+        <!-- /.modal-content -->
+      </div>
+      <!-- /.modal-dialog -->
+    </div>
+    <!-- END HEADER -->
+    
